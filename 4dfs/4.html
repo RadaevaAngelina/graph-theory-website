@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+  		<title>Теория графов</title>
+
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  		<META name="author" content="Angelina Radaeva">
+  		<META name="keywords" content="HTML, WWW, Web, паутина, поиск, определение">
+  		<META HTTP-EQUIV="Page-Enter" CONTENT="revealTrans(Duration=4.0,Transition=1)">  
+		<link rel="stylesheet" type="text/css" href="../styles/table.css">
+		<link rel="stylesheet" type="text/css" href="../styles/text.css">
+		<link rel="stylesheet" type="text/css" href="../styles/pictures.css">
+	</head>
+
+	<body bgcolor="#e0ece4" link="black" vlink="3b3b3b">
+<table class = "top">
+       <td colspan = 6 class ="zagolov1"><h1>DFS</h1> </td>
+</tr>
+<tr>
+       <td class ="zagolov" > <a href ="../1main/1.html"  style="text-decoration: none;"> Главная</a> </td> 
+	   <td class ="zagolov">  <a href ="../2ideas/2.html"  style="text-decoration: none;"> Основные понятия <br>Виды графов</a></td>
+	   <td class ="zagolov"><a href ="../3ways/3.html"  style="text-decoration: none;"> Способы объявления </a></td>  
+	    <td class ="zagolov">DFS</td>  
+	   <td class ="zagolov"> <a href ="../5bfs/5.html"  style="text-decoration: none;">BFS</a></td>   
+	   <td class ="zagolov"> <a href ="../6istok/6.html"  style="text-decoration: none;"> Доп.информация</a> </td> 
+</tr>
+
+
+<tr>
+<td colspan =6 class = "osn"> 
+<img src="лабиринт.gif" class ="pic4" align="right"> 
+<p><b>DFS</b>, или <b>Depth First Search</b>, — поиск в глубину, позволяющий найти маршрут от точки A до точки B. Используется в графах — особых структурах, состоящих из точек-вершин и ребер-путей. DFS ищет маршрут по графу “в глубину”: на каждом шаге “уходит” все дальше.
+
+<p>Классический пример использования алгоритма — поиск случайного пути в лабиринте. DFS начинает работу в заданной точке, на каждом шаге проходит по лабиринту до следующего поворота и выбирает направление. Если путь оказывается тупиковым, алгоритм возвращается к предыдущему повороту и пробует новое направление. В результате рано или поздно находится нужный путь.
+
+
+<p>Кроме лабиринтов, DFS может “пройти” практически по любому графу или дереву.
+</td>
+</tr>
+<tr>
+<td colspan =6 class = "osn">
+<h3>Принцип обхода графа в глубину</h3>
+
+<p>Мы рассмотрим стандартный рекурсивный алгоритм обхода.
+
+<p><b>Первый шаг</b>. Когда алгоритм начинает работу, все вершины считаются “белыми”, непосещенными. DFS начинает путь в заранее заданной вершине v и должен найти от нее путь до другой заданной вершины или же полностью составить карту графа.
+
+<p>Первое, что делает DFS, — красит вершину, в которой находится, в серый цвет. Это показывает, что алгоритм в ней уже был. Затем DFS проверяет соседей — вершины, которые соединены с той, где он находится.
+<div align="center">
+<img src="dfs.png" class="pic5" >
+</div>
+<p><b>Переход</b>. Если какая-то из смежных вершин белая, алгоритм переходит на нее и повторяет те же действия: красит в серый, ищет соседей. Это происходит не циклически, а рекурсивно: если представить DFS как функцию, то получится, что эта функция в ходе выполнения вызывает сама себя, но для другой вершины. Поэтому сначала алгоритм работает с одним выбранным соседом и, только если упирается в тупик, возвращается обратно и пробует пройти по другому пути.
+
+<p>Выбор соседа происходит случайно или по заранее заданным критериям — например, это может быть самая левая или самая правая вершина. Выше мы упоминали “правило левой руки”: оно по сути является таким критерием.
+<img src="DFS.gif" class="pic3" align="right" >
+<p>Если неисследованных соседей у вершины не осталось, она красится в черный цвет как полностью посещенная.
+
+<p><b>Завершение обхода</b>. Алгоритм завершается, если достигает нужной точки. В таком случае все вызванные “экземпляры” функции поочередно завершаются: от последнего до первого вызванного. Если задача — полностью перебрать граф, то критерий для завершения другой: все вершины должны стать черными.
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>        <font color ="green">vector <font color ="red">&lt <font color ="blue">bool<font color ="red">> <font color ="black">used<font color ="red">; <font color ="808080">// массив "серых" вершин </font>
+ <font color ="808080">2</font>        <font color ="blue">int <font color ="black">n<font color ="red">; <font color ="808080">// n - размер матрицы</font>
+ <font color ="808080">3</font>        <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> > <font color ="black">g<font color ="red">;
+ <font color ="808080">4</font>        <font color ="blue">void <font color ="black">dfs<font color ="red">(<font color ="blue">int<font color ="black"> v<font color ="red">){
+ <font color ="808080">5</font>        <font color ="black">used<font color ="red">[<font color ="black">v<font color ="red">]=<font color ="blue">true<font color ="red">;<font color ="808080"> //делаем начальную вершину "серой"</font>
+ <font color ="808080">6</font>        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0; <font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black"> i<font color ="red">++){
+ <font color ="808080">7</font>           <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] &&<font color ="black"> g<font color ="red">[<font color ="black">v<font color ="red">][<font color ="black">i<font color ="red">]){ <font color ="808080">//если не "серая" и соединена с изнальной</font>
+ <font color ="808080">8</font>             <font color ="black"> dfs<font color ="red">(<font color ="black">i<font color ="red">);<font color ="808080"> //проделываем тот же алгоритм с i вершиной</font>
+ <font color ="808080">9</font>            }
+ <font color ="808080">10</font>          }
+ <font color ="808080">11</font>        }
+</div>
+</pre> </code>
+</td>
+	</tr>
+<tr>
+<td colspan =6 class = "osn">
+<h3>Примеры использования</h3>
+<h4>Есть ли в ореинтированном графе цикл?</h4>
+<p>Напомним, что циклом в графе называется ненулевой путь, ведущий из вершины в саму себя. 
+<p>Рассмотрим задачу, в которой нужно определить, есть ли цикл в ореинтированном графе. Если есть, то вывести 1, если нет 0.
+<div class="pro">
+<pre> <code>
+ <font color ="808080">1</font>        <font color ="green">vector<font color ="red"> &lt <font color ="green">vector<font color ="red"> &lt<font color ="blue">int<font color ="red">> > <font color ="black">g<font color ="red">;
+ <font color ="808080">2</font>        <font color ="green">vector<font color ="red"> &lt<font color ="blue">int<font color ="red">> <font color ="black">used<font color ="red">;
+ <font color ="808080">3</font>        <font color ="blue">bool <font color ="black">dfs<font color ="red">(<font color ="blue">int <font color ="black">v<font color ="red">){
+ <font color ="808080">4</font>          <font color ="black">used<font color ="red">[<font color ="black">v<font color ="red">] = <font color ="f754e1">1<font color ="red">;  <font color ="808080">//"Красим" вершину в серый цвет (указываем, что мы в нее вошли).
+ <font color ="808080">5</font>          <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i <font color ="red">=<font color ="f754e1"> 0<font color ="red">;<font color ="black"> i <font color ="red">&lt<font color ="black"> n<font color ="red">; <font color ="black">i<font color ="red">++){
+ <font color ="808080">6</font>              <font color ="blue">if<font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">v<font color ="red">][<font color ="black">i<font color ="red">]){  <font color ="808080">//Если значение элемента строки матрицы (по условию, нам дана матрица смежности) отлично от "0", то:
+ <font color ="808080">7</font>                  <font color ="blue">if<font color ="red">(<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">]==<font color ="f754e1">0<font color ="red">){
+ <font color ="808080">8</font>                        <font color ="blue">if<font color ="red">(<font color ="black">dfs<font color ="red">(<font color ="black">i<font color ="red">)){ <font color ="808080">//если вершина "белая" (т. е. мы в неё еще не заходили)-запускаем рекурсивный вызов DFS от этой вершины.
+ <font color ="808080">9</font>                            <font color ="blue">return true<font color ="red">;
+ <font color ="808080">10</font>                            }
+ <font color ="808080">11</font>                       }          
+ <font color ="808080">12</font>                  <font color ="blue">else if<font color ="red">(<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] == <font color ="f754e1">1<font color ="red">){ <font color ="808080">//если вершина "серая" (мы её уже навещали, но не возвращались из ее потомков)-мы нашли цикл, следовательно поиск можно завершить.  
+ <font color ="808080">13</font>                        <font color ="blue">return true<font color ="red">;
+ <font color ="808080">14</font>                  <font color ="red">}
+ <font color ="808080">15</font>              <font color ="red">}
+ <font color ="808080">16</font>         <font color ="red"> }
+ <font color ="808080">17</font>          <font color ="black">used<font color ="red">[<font color ="black">v<font color ="red">] = <font color ="f754e1">2<font color ="red">; <font color ="808080">//Если ни один из if - ов не сработал, то "красим" вершину в черный цвет (отмечаем, как пройденную)
+ <font color ="808080">18</font>          <font color ="blue">return false<font color ="red">;
+ <font color ="808080">19</font>       <font color ="red"> }
+ <font color ="808080">20</font>        <font color ="blue">int <font color ="black">main<font color ="red">() {
+ <font color ="808080">21</font>          <font color ="green">cin<font color ="red">>> <font color ="black">n<font color ="red">;
+ <font color ="808080">22</font>          ...<font color ="808080"> //объявляем граф, меняем размеры матрицы, вектрова used
+ <font color ="808080">23</font>          <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red"> = <font color ="f754e1">0<font color ="red">;<font color ="black"> i <font color ="red">&lt <font color ="black">n<font color ="red">; <font color ="black">i<font color ="red">++){ <font color ="808080">//Проверяем поиском каждую вершину.
+ <font color ="808080">24</font>              <font color ="blue">if<font color ="red">(<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">]==<font color ="f754e1">0<font color ="red"> && <font color ="black">dfs(<font color ="black">i<font color ="red">)) {
+ <font color ="808080">25</font>                   <font color ="green">cout<font color ="red"> &lt&lt <font color ="blue">"1\n"<font color ="red">;
+ <font color ="808080">26</font>                    <font color ="blue">return <font color ="f754e1">0<font color ="red">;
+ <font color ="808080">27</font>              <font color ="red">}
+ <font color ="808080">28</font>         <font color ="red"> }
+ <font color ="808080">29</font>          <font color ="green">cout <font color ="red">&lt&lt <font color ="blue">"0\n" <font color ="red">;
+ <font color ="808080">30</font>        <font color ="red">}<font color ="black">
+</code></pre>
+</div>
+<hr>
+<h4>Выделение компонент связности</h4>
+<p>Алгоритм обхода в глубину позволяет решать множество различных задач. Например, реализуем при помощи алгоритма обхода в глубину подсчет числа компонент связности в неориентированном графе.
+
+<p>Для этого будем обходить все вершины графа и проверять, была ли очередная вершина посещена ранее. Если не была – то это означает, что найдена новая компонента связности, для выделения всей компоненты связности необходимо запустить DFS от этой вершины.
+<div class="pro">
+<pre> <code>
+ <font color ="808080">1</font>        <font color ="green">vector <font color ="red">&lt <font color ="blue">bool<font color ="red">> <font color ="black">used<font color ="red">;
+ <font color ="808080">2</font>        <font color ="blue">int <font color ="black">n<font color ="red">; 
+ <font color ="808080">3</font>        <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> > <font color ="black">g<font color ="red">;
+ <font color ="808080">4</font>        <font color ="blue">void <font color ="black">dfs<font color ="red">(<font color ="blue">int<font color ="black"> v<font color ="red">){
+ <font color ="808080">5</font>        <font color ="black">used<font color ="red">[<font color ="black">v<font color ="red">]=<font color ="blue">true<font color ="red">;
+ <font color ="808080">6</font>        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=0; <font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black"> i<font color ="red">++){
+ <font color ="808080">7</font>           <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] &&<font color ="black"> g<font color ="red">[<font color ="black">v<font color ="red">][<font color ="black">i<font color ="red">]){ 
+ <font color ="808080">8</font>             <font color ="black"> dfs<font color ="red">(<font color ="black">i<font color ="red">);
+ <font color ="808080">9</font>            <font color ="red">}
+ <font color ="808080">10</font>          <font color ="red">}
+ <font color ="808080">11</font>       <font color ="red"> }
+ <font color ="808080">12</font>       <font color ="blue">int <font color ="black">main <font color ="red">() {
+ <font color ="808080">13</font>       <font color ="blue">int <font color ="black">comp<font color ="red">=<font color ="f754e1">0<font color ="red">;
+ <font color ="808080">14</font>       <font color ="green">cin<font color ="red">>> <font color ="black">n<font color ="red">;
+ <font color ="808080">15</font>       <font color ="black">used<font color ="red">.<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">, <font color ="f754e1">0<font color ="red">);
+ <font color ="808080">16</font>       <font color ="black">g<font color ="red">.<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">);
+ <font color ="808080">17</font>       <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">; <font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">; <font color ="black">i<font color ="red">++)
+ <font color ="808080">18</font>       <font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">);
+ <font color ="808080">19</font>       <font color ="blue">for<font color ="red"> ( <font color ="blue">int<font color ="black"> i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black"> i<font color ="red">&lt<font color ="black">n; <font color ="black">i<font color ="red">++)
+ <font color ="808080">20</font>           <font color ="blue">for<font color ="red"> ( <font color ="blue">int<font color ="black"> j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black"> j<font color ="red">&lt<font color ="black">n<font color ="red">; <font color ="black">j<font color ="red">++){
+ <font color ="808080">21</font>              <font color ="green">cin<font color ="red">>><font color ="black"> g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">];
+ <font color ="808080">22</font>       <font color ="red">}
+ <font color ="808080">23</font>       <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red"> = <font color ="f754e1">0<font color ="red">;<font color ="black"> i <font color ="red">&lt<font color ="black"> n<font color ="red">; <font color ="black">i<font color ="red">++){
+ <font color ="808080">24</font>           <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">])
+ <font color ="808080">25</font>              <font color ="red"> {
+ <font color ="808080">26</font>                <font color ="black">comp<font color ="red">++;
+ <font color ="808080">27</font>                <font color ="black">dfs<font color ="red">(<font color ="black">i<font color ="red">);
+ <font color ="808080">28</font>               <font color ="red">}
+ <font color ="808080">29</font>       <font color ="red">}
+ <font color ="808080">30</font>       <font color ="green">cout<font color ="red"> &lt&lt <font color ="black">comp<font color ="red">; <font color ="black">
+</code></pre>
+</div>
+<hr>
+<h4>Является ли граф деревом? </h4>
+<p> Мы знаем, что в дереве число вершин на 1 больше числа ребер. Тогда чтобы данный граф был деревом, он должен быть связным и количество должно быть вершин на 1 больше числа ребер.
+<p>Тогда посчитаем количество ребер и проверим на связность (т.е. число компонент связности равно 0). Это мы умеем делать из предыдущего алгоритма.
+<div class="pro">
+<pre> <code>
+ <font color ="808080">1</font>        <font color ="green">vector <font color ="red">&lt <font color ="blue">bool<font color ="red">> <font color ="black">used<font color ="red">;
+ <font color ="808080">2</font>        <font color ="blue">int <font color ="black">n<font color ="red">; 
+ <font color ="808080">3</font>        <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> > <font color ="black">g<font color ="red">;
+ <font color ="808080">4</font>        <font color ="blue">void <font color ="black">dfs<font color ="red">(<font color ="blue">int<font color ="black"> v<font color ="red">){
+ <font color ="808080">5</font>        <font color ="black">used<font color ="red">[<font color ="black">v<font color ="red">]=<font color ="blue">true<font color ="red">;
+ <font color ="808080">6</font>        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=0; <font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black"> i<font color ="red">++){
+ <font color ="808080">7</font>           <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] &&<font color ="black"> g<font color ="red">[<font color ="black">v<font color ="red">][<font color ="black">i<font color ="red">]){ 
+ <font color ="808080">8</font>             <font color ="black"> dfs<font color ="red">(<font color ="black">i<font color ="red">);
+ <font color ="808080">9</font>            <font color ="red">}
+ <font color ="808080">10</font>          <font color ="red">}
+ <font color ="808080">11</font>       <font color ="red"> }
+ <font color ="808080">12</font>       <font color ="blue">int <font color ="black">main <font color ="red">() {
+ <font color ="808080">13</font>       <font color ="blue">int <font color ="black">comp<font color ="red">=<font color ="f754e1">0<font color ="red">;
+ <font color ="808080">14</font>       <font color ="green">cin<font color ="red">>> <font color ="black">n<font color ="red">;
+ <font color ="808080">15</font>       <font color ="black">used<font color ="red">.<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">, <font color ="f754e1">0<font color ="red">);
+ <font color ="808080">16</font>       <font color ="black">g<font color ="red">.<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">);
+ <font color ="808080">17</font>       <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">; <font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">; <font color ="black">i<font color ="red">++)
+ <font color ="808080">18</font>       <font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">resize<font color ="red">(<font color ="black">n<font color ="red">);
+ <font color ="808080">19</font>       <font color ="blue">for<font color ="red"> ( <font color ="blue">int<font color ="black"> i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black"> i<font color ="red">&lt<font color ="black">n; <font color ="black">i<font color ="red">++)
+ <font color ="808080">20</font>           <font color ="blue">for<font color ="red"> ( <font color ="blue">int<font color ="black"> j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black"> j<font color ="red">&lt<font color ="black">n<font color ="red">; <font color ="black">j<font color ="red">++){
+ <font color ="808080">21</font>              <font color ="green">cin<font color ="red">>><font color ="black"> g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">];
+ <font color ="808080">22</font>       <font color ="red">}
+ <font color ="808080">23</font>       <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red"> = <font color ="f754e1">0<font color ="red">;<font color ="black"> i <font color ="red">&lt<font color ="black"> n<font color ="red">; <font color ="black">i<font color ="red">++){
+ <font color ="808080">24</font>            <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">])
+ <font color ="808080">25</font>              <font color ="red"> {
+ <font color ="808080">26</font>              <font color ="black">comp<font color ="red">++;
+ <font color ="808080">27</font>              <font color ="black">dfs<font color ="red">(<font color ="black">i<font color ="red">);
+ <font color ="808080">28</font>              <font color ="red"> }
+ <font color ="808080">29</font>       <font color ="red">}
+ <font color ="808080">30</font>       <font color ="blue">for<font color ="red">(<font color ="blue"> int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red"> &lt<font color ="black">n<font color ="red">;<font color ="black"> i<font color ="red"> ++)
+ <font color ="808080">31</font>          <font color ="blue">for <font color ="red">( <font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0<font color ="red">; <font color ="black">j<font color ="red"> &lt<font color ="black">n<font color ="red"> ; <font color ="black">j<font color ="red"> ++){
+ <font color ="808080">32</font>              <font color ="blue">if<font color ="red">  (<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]==<font color ="f754e1">1<font color ="red">)
+ <font color ="808080">33</font>              <font color ="red"> {
+ <font color ="808080">34</font>                 <font color ="black"> r<font color ="red">++;
+ <font color ="808080">35</font>             <font color ="red">  }
+ <font color ="808080">36</font>       <font color ="red"> }
+ <font color ="808080">37</font>        <font color ="blue">if<font color ="red"> (<font color ="black">k<font color ="red">><font color ="f754e1">0 <font color ="red">|| <font color ="black">r<font color ="red">/<font color ="f754e1">2<font color ="red">!=<font color ="black">n<font color ="red">-<font color ="f754e1">1<font color ="red">){
+ <font color ="808080">38</font>           <font color ="green">cout <font color ="red">&lt&lt <font color ="blue">"NO"<font color ="red">;
+ <font color ="808080">39</font>       }
+ <font color ="808080">40</font>       <font color ="blue">else<font color ="red"> {
+ <font color ="808080">41</font>          <font color ="green"> cout<font color ="red"> &lt&lt <font color ="blue">"YES"<font color ="red">;
+ <font color ="808080">42</font>       <font color ="red">} <font color ="black">
+      
+</code></pre>
+</div>
+<hr>
+<h4>Является ли граф двудольным? </h4>
+<p>Граф называется двудольным, если его вершины можно разбить на два множества так, что концы каждого ребра принадлежат разным множествам. Иными словами, можно покрасить вершины графа в два цвета так, что концы каждого ребра покрашены в разный цвет.
+
+<p>Модифицируем алгоритм DFS так, что он будет проверять граф на двудольность и строить покраску графа в два цвета (если он двудольный). Для этого заменим список used на список Color, в котором будем хранить значение 0 для непосещенных вершин, а для посещенных вершин будем гранить значение 1 или 2 – ее цвет.
+
+<p>Алгоритм DFS для каждого ребра будет проверять цвет конечной вершины этого ребра. Если вершина не была посещена, то она красится в цвет, неравный цвету текущей вершины. Если же вершина была посещена, то ребро либо пропускается, если его концы – разноцветные, а если его концы одного цвета, то делается пометка, что граф не является двудольным (переменной IsBipartite присваивается значение False, по ее значению можно судить о том, является ли граф двудольный).
+<div class="pro">
+<pre> <code>
+ <font color ="808080">1</font>        <font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">> <font color ="black">color<font color ="red">;  <font color ="808080">// массив цветов вершин, также используется, как массив посещенных вершин в обходе dfs
+ <font color ="808080">2</font>        <font color ="green">vector<font color ="red">&lt<font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">>> <font color ="black">g<font color ="red">;  <font color ="808080">// граф, заданный в виде списка смежности
+ <font color ="808080">3</font>        <font color ="blue">bool <font color ="black">is_bip <font color ="red">= <font color ="f754e1">1<font color ="red">;  <font color ="808080">// если граф двудольный - 1, иначе - 0
+ <font color ="808080">4</font>        
+ <font color ="808080">5</font>        <font color ="blue">void <font color ="black">coloring<font color ="red">(<font color ="blue">int <font color ="black">v<font color ="red">, <font color ="blue">int <font color ="black">c<font color ="red">) {  <font color ="808080">// обход алгоритма dfs, красящий вершины 
+ <font color ="808080">6</font>            <font color ="black">color<font color ="red">[<font color ="black">v<font color ="red">] = <font color ="black">c<font color ="red">;
+ <font color ="808080">7</font>            <font color ="blue">for<font color ="red"> (<font color ="blue">auto <font color ="black">to <font color ="red">: <font color ="black">g<font color ="red">[<font color ="black">v<font color ="red">]) {
+ <font color ="808080">8</font>                <font color ="blue">if <font color ="red">(<font color ="black">color<font color ="red">[<font color ="black">to<font color ="red">] == <font color ="black">c<font color ="red">) {  <font color ="808080">// проверка на двудольность
+ <font color ="808080">9</font>                    <font color ="black">is_bip <font color ="red">= <font color ="f754e1">0<font color ="red">;
+ <font color ="808080">10</font>               <font color ="red"> }
+ <font color ="808080">11</font>                <font color ="blue">else if <font color ="red">(<font color ="black">color<font color ="red">[<font color ="black">to<font color ="red">] == <font color ="f754e1">0<font color ="red">) {
+ <font color ="808080">12</font>                    <font color ="black">coloring<font color ="red">(<font color ="black">to<font color ="red">, <font color ="f754e1">3<font color ="red"> - <font color ="black">c<font color ="red">);
+ <font color ="808080">13</font>              <font color ="red"> }
+ <font color ="808080">14</font>           <font color ="red">}
+ <font color ="808080">15</font>        <font color ="red">}
+ <font color ="808080">16</font>        
+ <font color ="808080">17</font>        
+ <font color ="808080">18</font>        <font color ="blue">int <font color ="black">main<font color ="red">() {
+ <font color ="808080">19</font>            ...  <font color ="808080">// ввод графа (возможное преобразование с одного типа объявления на другой)
+ <font color ="808080">20</font>            <font color ="blue">for <font color ="red">(<font color ="blue">int<font color ="black"> i<font color ="red"> = <font color ="f754e1">0<font color ="red">; <font color ="black">i <font color ="red">&lt <font color ="black">n<font color ="red">; <font color ="black">i<font color ="red">++) {  <font color ="808080">// запуск алгоритма от всех неиспользованных вершин
+ <font color ="808080">21</font>                <font color ="blue">if <font color ="red">(!<font color ="black">color<font color ="red">[<font color ="black">i<font color ="red">]) {
+ <font color ="808080">22</font>                    <font color ="black">coloring<font color ="red">(<font color ="black">i<font color ="red">, <font color ="f754e1">1<font color ="red">);
+ <font color ="808080">23</font>                <font color ="red">}
+ <font color ="808080">24</font>            <font color ="red">}
+ <font color ="808080">25</font>            <font color ="blue">if <font color ="red">(!<font color ="black">is_bip<font color ="red">) {
+ <font color ="808080">26</font>                <font color ="green">cout<font color ="red"> &lt&lt <font color ="blue">"NO"<font color ="red">;
+ <font color ="808080">27</font>               <font color ="blue">return<font color ="red">;
+ <font color ="808080">28</font>            <font color ="red">}
+ <font color ="808080">29</font>            <font color ="green">cout<font color ="red"> &lt&lt <font color ="blue">"YES\n"<font color ="red">;
+ <font color ="808080">30</font>            <font color ="red">}<font color ="black">
+
+
+</code></pre>
+</div>
+</td>
+	</tr>
+<tr>
+	<td colspan =6 class="bebra">
+	</td>
+	</tr>
+</table>
+
+
+	</body>
+
+</html>

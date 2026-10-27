@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+  		<title>Теория графов</title>
+
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  		<META name="author" content="Angelina Radaeva">
+  		<META name="keywords" content="HTML, WWW, Web, паутина, поиск, определение">
+  		<META HTTP-EQUIV="Page-Enter" CONTENT="revealTrans(Duration=4.0,Transition=1)">  
+		<link rel="stylesheet" title="Default" href="highlight/styles/default.min.css">
+</head>
+
+<script type="text/javascript" src="highlight/highlight.min.js"></script>
+<script type="text/javascript">
+ document.addEventListener("DOMContentLoaded", function () { hljs.highlightAll(); });
+</script>
+
+		<link rel="stylesheet" type="text/css" href="../styles/table.css">
+		<link rel="stylesheet" type="text/css" href="../styles/text.css">
+		<link rel="stylesheet" type="text/css" href="../styles/pictures.css">
+	</head>
+
+	<body bgcolor="#e0ece4" link="black" vlink="3b3b3b">
+<table class = "top">
+       <td colspan = 6 class ="zagolov1"><h1> BFS</h1> </td>
+</tr>
+<tr>
+       <td class ="zagolov"> <a href ="../1main/1.html"  style="text-decoration: none;"> Главная</a> </td> 
+	   <td class ="zagolov">  <a href ="../2ideas/2.html"  style="text-decoration: none;"> Основные понятия <br>Виды графов</a></td>
+	   <td class ="zagolov"><a href ="../3ways/3.html"  style="text-decoration: none;"> Способы объявления </a></td>  
+	    <td class ="zagolov"> <a href ="../4dfs/4.html"  style="text-decoration: none;">DFS</a></td> 
+	   <td class ="zagolov">  BFS</td>   
+	   <td class ="zagolov"> <a href ="../6istok/6.html"  style="text-decoration: none;">Доп.информация</a></td> 
+</tr>
+
+
+<tr>
+<td colspan =6 class = "osn"> 
+
+<p><b>BFS</b>, или <b>Breadth First Search</b> — алгоритм обхода графа в ширину. Граф — это структура из «вершин» и «ребер», соединяющих между собой вершины. По ребрам можно передвигаться от одной вершине к другой, и BFS делает это поуровнево: сначала проходит по всем ближайшим от начальной точки вершинам, потом спускается глубже.
+
+<p>Выглядит это так: алгоритм начинает в заранее выбранной вершине и сначала «посещает» и отмечает всех соседей этой вершины. Потом он переходит к соседям посещенных вершин, затем — дальше по тому же принципу. Из-за характера распространения, похожего на волну, алгоритм еще называют волновым. BFS — один из двух популярных алгоритмов обхода. Второй называется DFS и подразумевает обход в глубину: сначала алгоритм проходит по ребрам «вглубь» графа.
+
+</tr>
+<tr>
+<td colspan =6 class = "osn"> 
+<h3>Как работает алгоритм BFS</h3>
+<p>Алгоритм простой и интуитивно понятный. Он проходит по вершинам графа, пока в том не останется непосещенных вершин, и рассчитывает самый короткий путь до целевой вершины. Чтобы показать его работу нагляднее, представим алгоритм пошагово.
+
+<p><b>Начало работы</b>. В качестве начальной можно выбрать любую вершину. На момент начала работы алгоритма все вершины помечены как непосещенные — их называют «белыми». Первое, что делает алгоритм, — помечает начальную вершину как посещенную (также используют термины «развернутая» или «серая»). Если она и есть целевая, на этом алгоритм завершается. Но чаще всего это не так.
+
+<p><b>Поиск соседей</b>. Алгоритм проверяет, какие соседи есть у начальной вершины. Они добавляются в «очередь действий» в том порядке, в каком алгоритм их нашел, и тоже помечаются как «серые». Это продолжается, пока у начальной вершины не останется «белых» соседей.
+<img src="bfs.gif" class="pic3" align="right" >
+<p><b>Переход на следующую вершину</b>. Когда алгоритм проходит по всем соседям начальной вершины, он помечает ее как полностью обойденную. Такие вершины еще называют «черными»: алгоритм к ним не возвращается. Затем он переходит к одной из «серых» вершин — соседей начальной. Алгоритм выбирает первую вершину в очереди. Далее действия повторяются: «соседи» вершины, кроме «черной», заносятся в очередь.
+
+<p>Когда и эта вершина будет пройдена, переход повторится по тому же принципу — первая вершина в очереди. В этом случае ею будет второй сосед начальной вершины — мы помним, что их добавляли в очередь первыми. И только когда соседи начальной вершины в очереди закончатся, алгоритм пойдет по следующему «уровню» вершин. Так и достигается обход в ширину.
+
+<p><b>Конец алгоритма</b>. Если очередь оказалась пустой, это значит, что «белых» и «серых» вершин больше не осталось. Алгоритм завершится. Если при этом целевая вершина не будет достигнута, это значит, что доступа к ней из начальной точки нет.
+
+<p>Если целевая вершина достигается раньше, чем алгоритм пройдет по всему графу, это также может означать его завершение. Алгоритм остановится, потому что задача окажется выполнена: самый короткий путь к целевой вершине будет найден.
+
+<hr>
+<h3>Алгоритм поиска кратчайшего пути</h3>
+<div class="pro">
+<pre>
+<code class="cpp">
+ <font color ="808080">1</font>     <font color = "green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">><font color ="black"> pred<font color ="red">;   <font color ="808080">//глобально объявляем верктор "черных" вершин </font>  
+ <font color ="808080">2</font>     <font color = "green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> <font color ="black">used<font color ="red">;  <font color ="808080">//глобально объявляем вектор "серых" вершин</font>  
+ <font color ="808080">3</font>     <font color = "green">vector <font color ="red"> &lt<font color = "green"> vector <font color ="red"><<font color ="blue">int<font color ="red">> > <font color ="black">v<font color ="red">;
+ <font color ="808080">4</font>     <font color = "green">queue <font color ="red">&lt<font color ="blue">int<font color ="red">> <font color ="black">q<font color ="red">;
+ <font color ="808080">5</font>     <font color ="blue">int <font color ="black">n<font color ="red">;
+ <font color ="808080">6</font>     <font color ="blue">int <font color ="black">start<font color ="red">,<font color ="black">finish<font color ="red">;
+ <font color ="808080">7</font>     <font color ="blue">void <font color ="black">bfs<font color ="red">(<font color ="blue">int <font color ="black">a<font color ="red">)
+ <font color ="808080">8</font>     <font color ="red">{
+ <font color ="808080">9</font>       <font color ="black">q<font color ="red">.<font color ="black">push<font color ="red">(<font color ="black">a<font color ="red">);  <font color ="808080">//добавляем вершину в очередь</font>  
+ <font color ="808080">10</font>       <font color ="black">used<font color ="red">[<font color ="black">a<font color ="red">] <font color ="red">=<font color ="f754e1"> 1<font color ="red">; <font color ="808080">//делаем "серой"</font>  
+ <font color ="808080">11</font>         <font color ="blue">while<font color ="red">(!<font color ="black">q<font color ="red">.<font color = "green">empty<font color ="red">())
+ <font color ="808080">12</font>         <font color ="red">{
+ <font color ="808080">13</font>             <font color ="black">a <font color ="red">= <font color ="black">q<font color ="red">.<font color = "green">front<font color ="red">(); 
+ <font color ="808080">14</font>             <font color ="black">q<font color ="red">.<font color ="black">pop<font color ="red">(); 
+ <font color ="808080">15</font>             <font color ="blue">for<font color ="red"> (<font color ="blue">int<font color ="black"> i<font color ="red"> = <font color ="f754e1">0<font color ="red">; <font color ="black">i<font color ="red"> &lt <font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++)
+ <font color ="808080">16</font>             {
+ <font color ="808080">17</font>                 <font color ="blue">if<font color ="red"> (!<font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] && <font color ="black">v<font color ="red">[<font color ="black">a<font color ="red">][<font color ="black">i<font color ="red">]) <font color ="808080">// проверяем соединена ли изначальная вершина <b>а</b> с <b>i</b>  и использованная(серая) ли она </font>
+ <font color ="808080">18</font>                 {
+ <font color ="808080">19</font>                    <font color ="black">q<font color ="red">.<font color ="black">push<font color ="red">(<font color ="black">i<font color ="red">); <font color ="808080">//добавляем в очередь соседние с <b>a</b> не "серые"  </font> 
+ <font color ="808080">20</font>                    <font color ="black">used<font color ="red">[<font color ="black">i<font color ="red">] =<font color ="f754e1"> 1<font color ="red">; <font color ="808080">//делаем соседнюю с <b>a</b>"серой"</font> 
+ <font color ="808080">21</font>                     <font color ="black">pred<font color ="red">[<font color ="black">i<font color ="red">] = <font color ="black">a<font color ="red">; <font color ="808080">//делаем  <b>a</b> "черной", т.е. это показывает, что <b>i</b> соединена с <b>a</b></font> 
+ <font color ="808080">22</font>                }
+ <font color ="808080">23</font>            }
+ <font color ="808080">24</font>        }
+ <font color ="808080">25</font>     }
+ <font color ="808080">26</font>     <font color ="blue">int <font color ="black">main<font color ="red">()
+ <font color ="808080">27</font>     {
+ <font color ="808080">28</font>         <font color = "green"> cin <font color ="red">>> <font color ="black">n<font color ="red"><font color ="red">;
+ <font color ="808080">29</font>         <font color ="black">pred<font color ="red">.<font color = "green">assign<font color ="red">(<font color ="black">n<font color ="red">,<font color ="f754e1"> -2<font color ="red">);<font color ="808080">//меняем размер вектора "черных" вершин, заполняем его -2</font> 
+ <font color ="808080">30</font>         <font color ="black">used<font color ="red">.<font color = "green">assign<font color ="red">(<font color ="black">n<font color ="red">,<font color ="f754e1"> 0<font color ="red">);<font color ="808080">//меняем размер вектора "серых" вершин, заплоняем его нулями</font> 
+ <font color ="808080">31</font>       <font color ="black"> v<font color ="red">.<font color = "green">assign<font color ="red"> (<font color ="black">n<font color ="red">, <font color = "green">vector<font color ="red"> &lt<font color ="blue">int<font color ="red">> (<font color ="black">n<font color ="red">)); <font color ="808080">// меняем размер матрицы смежности</font> 
+ <font color ="808080">32</font>        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;<font color ="black">i <font color ="red">&lt <font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++)
+ <font color ="808080">33</font>        {
+ <font color ="808080">34</font>            <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">j<font color ="red">&lt<font color ="black">n;<font color ="black">j<font color ="red">++)
+ <font color ="808080">35</font>             {
+ <font color ="808080">36</font>                <font color = "green">cin<font color ="red"> >> <font color ="black">v<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">];<font color ="808080">//вводим матрицу смежности</font> 
+ <font color ="808080">37</font>            }
+ <font color ="808080">38</font>         }
+ <font color ="808080">39</font>        <font color = "green">cin <font color ="red">>> <font color ="black"> start<font color ="red">  >> <font color ="black">finish<font color ="red">;<font color ="808080">// вводим начало пути и конец</font> 
+ <font color ="808080">40</font>         <font color ="black">start<font color ="red">--;
+ <font color ="808080">41</font>         <font color ="black">finish<font color ="red">--;
+ <font color ="808080">42</font>         <font color ="black">bfs<font color ="red">(<font color ="black">start<font color ="red">);
+ <font color ="808080">43</font>         <font color ="black">pred<font color ="red">[<font color ="black">start<font color ="red">] = <font color ="f754e1">-1<font color ="red">;
+ <font color ="808080">44</font>         <font color = "green">vector <font color ="red"><<font color ="blue">int<font color ="red">><font color ="black"> trip<font color ="red">;
+ <font color ="808080">45</font>         <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i <font color ="red">= <font color ="black">finish<font color ="red">; <font color ="black">i<font color ="red">!= <font color ="f754e1">-1<font color ="red">; <font color ="black">i <font color ="red">= <font color ="black">pred<font color ="red">[<font color ="black">i<font color ="red">])  <font color ="808080">// проходим по вершинам так: начиная с конечной, если не равно -1(тогда это стартовая вершина и обход завершен), мы присваиваем индексу ту вершину в которую есть путь</font> 
+ <font color ="808080">46</font>         {
+ <font color ="808080">47</font>             <font color ="blue">if(<font color ="black">pred<font color ="red">[<font color ="black">i<font color ="red">]==<font color ="f754e1">-2) <font color ="808080">//проверим "дошел" ли наш алгоритм до конечной вершины</font> 
+ <font color ="808080">48</font>            {
+ <font color ="808080">49</font>               <font color = "green"> cout <font color ="red">&lt&lt<font color ="f754e1"> -1<font color ="red">;
+ <font color ="808080">50</font>                <font color ="black">exit<font color ="red">(<font color ="f754e1">0<font color ="red">);
+ <font color ="808080">51</font>             }
+ <font color ="808080">52</font>             <font color ="blue">else
+ <font color ="808080">53</font>             <font color ="red">{
+ <font color ="808080">54</font>                <font color ="black"> trip<font color ="red">.<font color = "green">push_back<font color ="red">(<font color ="black">i<font color ="red">);  <font color ="808080">//добавляем эту вершину в путь</font> 
+ <font color ="808080">55</font>             }
+ <font color ="808080">56</font>     
+ <font color ="808080">57</font>         }
+ <font color ="808080">58</font>     
+ <font color ="808080">59</font>     
+ <font color ="808080">60</font>          <font color = "green">cout <font color ="red"> &lt&lt <font color ="black">trip.<font color = "green"><font color = "green">size<font color ="red">()-<font color ="f754e1">1<font color ="red"> &lt&lt  <font color = "green">endl<font color ="red">;  <font color ="808080">//выводим длину пути</font> 
+ <font color ="808080">61</font>          <font color ="blue">if<font color ="red">(<font color ="black">trip<font color ="red">.<font color = "green">size<font color ="red">()-<font color ="f754e1">1<font color ="red">!=<font color ="f754e1">0<font color ="red">)
+ <font color ="808080">62</font>        {
+ <font color ="808080">63</font>        <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red"> = <font color ="black">trip<font color ="red">.<font color = "green">size<font color ="red">()-<font color ="f754e1">1<font color ="red">;<font color ="black">i<font color ="red"> > 0<font color ="red">;<font color ="black">i<font color ="red">--)
+ <font color ="808080">64</font>        {
+ <font color ="808080">65</font>        <font color = "green"> cout  <font color ="red">&lt&lt <font color ="black">trip<font color ="red">[<font color ="black">i<font color ="red">]+<font color ="f754e1">1<font color ="red"> &lt&lt ' '<font color ="red">; <font color ="808080">//выводим сам путь</font> 
+ <font color ="808080">66</font>     }
+ <font color ="808080">67</font>     <font color = "green">cout<font color ="red"> &lt&lt <font color ="black">trip<font color ="red">[<font color ="f754e1">0<font color ="red">]+<font color ="f754e1">1 <font color ="red">&lt&lt ' '<font color ="red">;
+ <font color ="808080">68</font>     }
+ <font color ="808080">69</font> }
+</code>
+</pre>
+</div>
+</td>
+	</tr>
+
+</table>
+<tr>
+	<td colspan =6 class="bebra">
+	</td>
+	</tr>
+
+	</body>
+
+</html>

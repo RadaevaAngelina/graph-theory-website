@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+  		<title>Теория графов</title>
+
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  		<META name="author" content="Angelina Radaeva">
+  		<META name="keywords" content="HTML, WWW, Web, паутина, поиск, определение">
+  		<META HTTP-EQUIV="Page-Enter" CONTENT="revealTrans(Duration=4.0,Transition=1)">  
+		<link rel="stylesheet" type="text/css" href="../styles/table.css">
+		<link rel="stylesheet" type="text/css" href="../styles/text.css">
+		<link rel="stylesheet" type="text/css" href="../styles/pictures.css">
+	</head>
+
+	<body bgcolor="#e0ece4" link="black" vlink="3b3b3b" >
+<table class = "top">
+       <td colspan = 6 class ="zagolov1"><h1>Способы объявления </h1> </td>
+</tr>
+<tr>
+       <td class ="zagolov"> <a href ="../1main/1.html"  style="text-decoration: none;"> Главная</a> </td> 
+	   <td class ="zagolov">  <a href ="../2ideas/2.html"  style="text-decoration: none;"> Основные понятия <br>Виды графов</a></td>
+	   <td class ="zagolov"> Способы объявления </td>  
+	    <td class ="zagolov"><a href ="../4dfs/4.html"  style="text-decoration: none;">  DFS </td>  
+	   <td class ="zagolov"> <a href ="../5bfs/5.html"  style="text-decoration: none;">BFS</a></td>  
+	   <td class ="zagolov"> <a href ="../6istok/6.html"  style="text-decoration: none;"> Доп.информация</a></td> 
+</tr>
+
+
+<tr>
+<td colspan =6 class = "osn"> 
+<h2>Матрица смежности</h2>
+<img src="табличка.png" class ="pic4" align="right"> 
+<img src="grafmatrix.png" class ="pic4" align="right"> 
+<p>Таблица, где как столбцы, так и строки соответствуют вершинам графа. В каждой ячейке этой матрицы записывается число, определяющее наличие связи от вершины-строки к вершине-столбцу (либо наоборот).
+
+<p>Это наиболее удобный способ представления взвешенных графов.
+
+Недостатком являются требования к памяти, прямо пропорциональные квадрату количества вершин.
+</p><hr>
+<h3>Объявление графа в C++</h3>
+
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>   <font color ="green">cin</font><font color ="red"> >></font> n<font color ="red">; <font color ="808080">//вводим количество вершин</font>
+ <font color ="808080">2</font>   <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> ></font><font color ="black">a<font color ="red">(</font><font color ="black">n<font color ="red">,<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> (</font><font color ="black">n<font color ="red">)); <font color ="808080">//создаем двумерный вектор (можно вместо вектора создать двумерный массив(int a[n][n])</font>
+ <font color ="808080">3</font>   <font color ="blue">for <font color ="red">( <font color ="blue">int</font> </font><font color ="black">i<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;</font></font><font color ="black">i<font color ="red"> &lt</font> n<font color ="red">;</font>i<font color ="red">++){
+ <font color ="808080">4</font>       <font color ="blue">for <font color ="red">( <font color ="blue">int</font></font><font color ="black"> j<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;</font></font><font color ="black">j<font color ="red"> &lt</font></font><font color ="black"> n<font color ="red">;</font></font><font color ="black">j<font color ="red">++){
+ <font color ="808080">5</font>           <font color ="green">cin <font color ="red">>> <font color ="black">a<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]; <font color ="808080">//ввод матрицы</font>
+ <font color ="808080">6</font>               }
+ <font color ="808080">7</font>           }
+</code>
+</pre>
+</div>
+
+
+
+</td> </tr>
+
+<td colspan =6 class = "osn"> 
+<h2>Список смежности</h2>
+<img src="список смежности.png" class ="pic3" align="right"> 
+
+<p>Список, где каждой вершине графа соответствует строка, в которой хранится список смежных вершин. Такая структура данных не является таблицей в обычном понимании, а представляет собой «список списков».
+
+<p>Это наиболее удобный способ для представления разреженных графов, а также при реализации базовых алгоритмов обхода графа в ширину или глубину, где нужно быстро получать «соседей» текущей просматриваемой вершины.
+</p><hr>
+<h3>Объявление графа в C++</h3>
+
+
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>     <font color ="green">cin</font><font color ="red"> >></font> n<font color ="red">; <font color ="808080">//вводим количество вершин</font>
+ <font color ="808080">2</font>     <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> ></font><font color ="black">g<font color ="red">(</font>n<font color ="red">,<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> (</font><font color ="black">n<font color ="red">)); <font color ="808080">//создаем двумерный вектор</font>
+ <font color ="808080">3</font>     <font color ="blue">for <font color ="red">( <font color ="blue">int</font> </font><font color ="black">i<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;</font></font><font color ="black">i<font color ="red"> &lt</font> n<font color ="red">;</font>i<font color ="red">++){
+ <font color ="808080">4</font>     <font color ="blue">do<font color ="red">{
+ <font color ="808080">5</font>         <font color ="blue">int <font color ="black">t<font color ="red">;
+ <font color ="808080">6</font>         <font color ="green">cin<font color ="red"> >> <font color ="black">t<font color ="red">;  <font color ="808080">// вводим вершину смежную с данной
+ <font color ="808080">7</font>        <font color ="black"> g <font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="black">t<font color ="red">);  <font color ="808080">//добавляем введенную вершину в строку вектора  
+ <font color ="808080">8</font>	 <font color ="red">}
+ <font color ="808080">9</font>		 <font color ="blue">while<font color ="red">(<font color ="black">getchar<font color ="red">()!=<font color ="orange">'\n'<font color ="red">);  <font color ="808080">//вводим до тех пор, пока не введем пробел
+ <font color ="808080">10</font>    <font color ="red">}</font>
+</code>
+</pre>
+</div>
+
+
+</td>
+</tr>
+
+
+
+
+<tr>
+<td colspan =6 class = "osn"> 
+<h2>Список рёбер</h2>
+<img src="список ребер.png" class ="pic3" align="right"> 
+<p>Список, где каждому ребру графа соответствует строка, в которой хранятся две вершины, инцидентные ребру.
+
+<p>Это наиболее компактный способ представления графов, поэтому часто применяется для внешнего хранения или обмена данными.
+</p><hr>
+<h3>Объявление графа в C++</h3>	
+	
+	
+<div class="pro" >
+  <pre>
+   <code>
+<font color ="808080">1</font>    <font color ="green">cin</font><font color ="red"> >></font><font color ="black">versh<font color ="red"> >><font color ="black">rebr<font color ="red"> ; <font color ="808080"> //Вводим количество вершин и ребер соответсвенно
+<font color ="808080">2</font>     <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0;<font color ="black">i<font color ="red">&lt<font color ="black">rebr;<font color ="black">i<font color ="red">++){
+<font color ="808080">3</font>             <font color ="green">cin<font color ="red"> >><font color ="black">le<font color ="red">>><font color ="black">r<font color ="red">;<font color ="808080">//вводим левую и правую вершину, соединенных ребром
+<font color ="808080">4</font>     }
+
+   </code>
+  </pre>
+</div>
+	
+	</td>
+	</tr>
+	
+	
+<tr>
+<td colspan =6 class = "osn"> 
+<h3>Переход из одного способа объявления в другой</h3>
+<details>
+<summary><b>Из матрицы в список ребер</b></summary>  
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>   <font color ="blue">int <font color ="black">n<font color ="red">,<font color ="black">q<font color ="red">=<font color ="f754e1">0<font color ="red">;
+ <font color ="808080">2</font>   <font color ="green">cin</font><font color ="red"> >></font> <font color ="black">n<font color ="red">; 
+ <font color ="808080">3</font>   <font color ="green">vector <font color ="red">&lt<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> ></font><font color ="black">a<font color ="red">(</font><font color ="black">n<font color ="red">,<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> (</font><font color ="black">n<font color ="red">));
+ <font color ="808080">4</font>   <font color ="blue">for <font color ="red">( <font color ="blue">int</font> </font><font color ="black">i<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;</font></font><font color ="black">i<font color ="red"> &lt</font> n<font color ="red">;</font>i<font color ="red">++){
+ <font color ="808080">5</font>       <font color ="blue">for <font color ="red">( <font color ="blue">int</font></font><font color ="black"> j<font color ="red"> =<font color ="f754e1"> 0<font color ="red">;</font></font><font color ="black">j<font color ="red"> &lt</font></font><font color ="black"> n<font color ="red">;</font></font><font color ="black">j<font color ="red">++){
+ <font color ="808080">6</font>           <font color ="green">cin <font color ="red">>> <font color ="black">a<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]; 
+ <font color ="808080">7</font>              <font color ="red"> }
+ <font color ="808080">8</font>          <font color ="red"> }
+ <font color ="808080">9</font>      <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">10</font>         <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="black">q<font color ="red">;<font color ="black">j<font color ="red">&ltn;<font color ="black">j<font color ="red">++){
+ <font color ="808080">11</font>                <font color ="blue"> if<font color ="red"> (<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]==<font color ="f754e1">1<font color ="red">){
+ <font color ="808080">12</font>               <font color ="green">cout<font color ="red"> &lt&lt <font color ="black">i<font color ="red">+<font color ="f754e1">1<font color ="red">&lt&lt<font color ="blue">" "<font color ="red">&lt&lt<font color ="black">j<font color ="red">+<font color ="f754e1">1;
+ <font color ="808080">13</font>               <font color ="green">cout <font color ="red">&lt&lt<font color ="green">endl;
+ <font color ="808080">14</font>             <font color ="red">  }
+ <font color ="808080">15</font>           }
+ <font color ="808080">16</font>           <font color ="black">q<font color ="red">++;
+ <font color ="808080">17</font>       }
+ <font color ="808080">18</font>  }</font><font color ="black">
+
+   </code>
+  </pre>
+</div>
+
+</details>
+
+<details>
+<summary><b>Из матрицы в список смежности</b></summary>
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>     <font color ="blue">for <font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red"> =<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red"> &lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">2</font>           <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">j<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">j<font color ="red">++){
+ <font color ="808080">3</font>                   <font color ="blue">if <font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]<font color ="red">==<font color ="f754e1">1<font color ="red">)
+ <font color ="808080">4</font>                   {
+ <font color ="808080">5</font>                      <font color ="black"> m<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="black">j<font color ="red">);
+ <font color ="808080">6</font>                   }
+ <font color ="808080">7</font>           }
+ <font color ="808080">8</font>       }
+ <font color ="808080">9</font>        <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">m<font color ="red">.<font color ="green">size<font color ="red">();<font color ="black">i<font color ="red">++){
+ <font color ="808080">10</font>               <font color ="blue">if <font color ="red">(<font color ="black">m<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">empty<font color ="red">())
+ <font color ="808080">11</font>                   {
+ <font color ="808080">12</font>                      <font color ="black"> m<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="f754e1">-1<font color ="red">);
+ <font color ="808080">13</font>                   }<font color ="black">
+</code>
+</pre>
+</div>
+</details>
+
+<details>
+<summary><b>Из списка смежности в матрицу</b></summary>  
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>      <font color ="blue">for<font color ="red"> (<font color ="blue">int<font color ="black"> i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">2</font>         <font color ="blue">do<font color ="red">{
+ <font color ="808080">3</font>             <font color ="blue">int<font color ="black"> t<font color ="red">;
+ <font color ="808080">4</font>             <font color ="green">cin<font color ="red"> >> <font color ="black">t<font color ="red">;
+ <font color ="808080">5</font>             <font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="black">t<font color ="red">);
+ <font color ="808080">6</font>     		}
+ <font color ="808080">7</font>     		<font color ="blue">while<font color ="red">(<font color ="black">getchar<font color ="red">()!=<font color ="orange">'\n'<font color ="red">);
+ <font color ="808080">8</font>     		}
+ <font color ="808080">9</font>         <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red"> =<font color ="f754e1"> 0;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++<font color ="red">){
+ <font color ="808080">10</font>            <font color ="blue"> for<font color ="red"> (<font color ="blue">int <font color ="black">j <font color ="red">=<font color ="f754e1"> 0<font color ="red">;<font color ="black">j <font color ="red">&lt<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">size<font color ="red">();<font color ="black">j<font color ="red">++<font color ="red">){
+ <font color ="808080">11</font>                 <font color ="blue">if<font color ="red"> (<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]!=0<font color ="red">){
+ <font color ="808080">12</font>               <font color ="blue"> int<font color ="black"> r<font color ="red"> = <font color ="black">i<font color ="red">;
+ <font color ="808080">13</font>                 <font color ="blue">int<font color ="black"> l <font color ="red">= <font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">] -<font color ="f754e1"> 1<font color ="red">;
+ <font color ="808080">14</font>               <font color ="black"> m<font color ="red">[<font color ="black">r<font color ="red">][<font color ="black">l<font color ="red">]<font color ="red">=<font color ="f754e1">1<font color ="red">;
+ <font color ="808080">15</font>             }
+ <font color ="808080">16</font>        }
+ <font color ="808080">17</font>     }<font color ="black">
+</code>
+</pre>
+</div>
+</details>
+
+<details>
+<summary><b>Из списка ребер в матрицу</b></summary>  
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>          <font color ="blue">int<font color ="black"> versh<font color ="red">,<font color ="black">rebr<font color ="red">,<font color ="black">le<font color ="red">,<font color ="black">r<font color ="red">;
+ <font color ="808080">2</font>          <font color ="green">cin<font color ="red"> >> <font color ="black">versh<font color ="red">>><font color ="black">rebr<font color ="red">;
+ <font color ="808080">3</font>          <font color ="green">vector <font color ="red">&lt<font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">> ><font color ="black"> g<font color ="red">(<font color ="black">versh<font color ="red">,<font color ="green">vector <font color ="red">&lt<font color ="blue">int<font color ="red">> (<font color ="black">versh<font color ="red">,<font color ="f754e1">0<font color ="red">));
+ <font color ="808080">4</font>          <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">rebr<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">5</font>                  <font color ="green">cin<font color ="red"> >><font color ="black">le<font color ="red">>><font color ="black">r<font color ="red">;
+ <font color ="808080">6</font>                <font color ="black"> g<font color ="red">[<font color ="black">le<font color ="red">-<font color ="f754e1">1<font color ="red">][<font color ="black">r<font color ="red">-<font color ="f754e1">1<font color ="red">]=<font color ="f754e1">1<font color ="red">;
+ <font color ="808080">7</font>                  <font color ="black">g<font color ="red">[<font color ="black">r<font color ="red">-<font color ="f754e1">1<font color ="red">][<font color ="black">le<font color ="red">-<font color ="f754e1">1<font color ="red">]=<font color ="f754e1">1<font color ="red">;
+ <font color ="808080">8</font>          }<font color ="black">
+</code>
+</pre>
+</div>
+
+</details>
+
+<details>
+<summary><b>Из списка ребер в список смежности</b></summary>  
+
+<div class="pro">
+<pre>
+<code>
+ <font color ="808080">1</font>  <font color ="green">cin<font color ="red"> >> <font color ="black">versh<font color ="red">>><font color ="black">reber<font color ="red">;
+ <font color ="808080">2</font>  <font color ="green">vector <font color ="red">&lt<font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">> ><font color ="black"> g<font color ="red">(<font color ="black">n<font color ="red">);
+ <font color ="808080">3</font>  <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">reber<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">4</font>         <font color ="green">cin<font color ="red"> >> <font color ="black">le<font color ="red">>><font color ="black">r<font color ="red">;
+ <font color ="808080">5</font>          <font color ="black">g<font color ="red">[<font color ="black">le<font color ="red">-<font color ="f754e1">1<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="black">vr<font color ="red">-<font color ="f754e1">1<font color ="red">);
+ <font color ="808080">6</font>        <font color ="black"> g<font color ="red">[<font color ="black">r<font color ="red">-<font color ="f754e1">1<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="black">le<font color ="red">-<font color ="f754e1">1<font color ="red">);
+ <font color ="808080">7</font>    }
+ <font color ="808080">8</font>     <font color ="blue">for(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">versh<font color ="red">;<font color ="black">i<font color ="red">++){
+ <font color ="808080">9</font>       <font color ="blue"> if<font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">empty<font color ="red">()){
+ <font color ="808080">10</font>            <font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">].<font color ="green">push_back<font color ="red">(<font color ="f754e1">-1<font color ="red">);
+ <font color ="808080">11</font>         }
+ <font color ="808080">12</font>     }
+</code>
+</pre>
+</div>
+</details>
+
+<br>
+<br>
+</td>
+	</tr>
+	<tr>
+<td colspan =6 class = "osn"> 
+<h3> Некоторые алгоритмы</h3>
+<h4> Проверка на наличие петлей</h4>
+<p>По заданной матрице смежности неориентированного графа определите, содержит ли он петли.
+<p> Достаточно посмотреть есть ли единичка на главной диагонали, т.е. g[ i ][ i ]==1
+<div class="pro">
+<pre>
+<code>
+    <font color ="blue">int <font color ="black">n<font color ="red">;
+    <font color ="green">cin<font color ="red"> >> <font color ="black">n<font color ="red">;
+    <font color ="green">vector <font color ="red">&lt<font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">> > <font color ="black">g<font color ="red">(<font color ="black">n<font color ="red">,<font color ="green">vector<font color ="red"> <<font color ="blue">int<font color ="red">> (<font color ="black">n<font color ="red">));
+    ...
+    <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n;<font color ="black">i<font color ="red">++){
+        <font color ="blue">if<font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">i<font color ="red">]==<font color ="f754e1">1<font color ="red">){
+            <font color ="green">cout <font color ="red">&lt&lt <font color ="blue">"YES"<font color ="red">;
+            <font color ="blue">return <font color ="f754e1">0<font color ="red">;
+        }
+    }
+    <font color ="green">cout<font color ="red">&lt&lt<font color ="blue">"NO"<font color ="red">;<font color ="black">
+	</code>
+</pre>
+</div>
+<hr>
+<h4> Проверка на неореинтированность</h4>
+<p>По заданной квадратной матрице n×n из нулей и единиц определите, может ли данная матрица быть матрицей смежности простого неориентированного графа.
+<p> Заметим, что в неореинтированном графе единички находится симметрично относительно диагонали. Поэтому надо проверить g[ i ][ j ]==g[ j ][ i ]. Т.к. граф должен быть простым, то надо проверить на петли.
+<div class="pro">
+<pre>
+<code>
+    <font color ="blue">int <font color ="black">n<font color ="red">;
+    <font color ="green">cin<font color ="red"> >><font color ="black"> n<font color ="red">;
+    ...
+    <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">j<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">j<font color ="red">++){
+            <font color ="blue">if <font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]!=<font color ="black">g<font color ="red">[<font color ="black">j<font color ="red">][<font color ="black">i<font color ="red">] || <font color ="black">i<font color ="red">==<font color ="black">j <font color ="red">&&<font color ="black"> g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]==<font color ="f754e1">1<font color ="red">){
+              <font color ="green">cout<font color ="red">&lt&lt<font color ="blue">"NO"<font color ="red">;
+              <font color ="blue">return <font color ="f754e1">0<font color ="red">;
+            }
+        }
+    }
+        <font color ="green">cout <font color ="red">&lt&lt <font color ="blue">"YES"<font color ="red">;<font color ="black">
+		</code>
+</pre>
+</div>
+<hr>
+<h4>Подсчет количества ребер неореинтированного графа</h4>
+<p>Простой неориентированный граф задан матрицей смежности. Найдите количество ребер в графе.
+<p>Для этого достаточно посчитать в матрице количество единичек, которые обозначает соединение между вершинами, соответсвенно ребро. Затем делим на 2, т.к. в неореинтированном графе ребро ab тоже самое, что и ba.
+<p>Если хотим посчитать количество ребер в ореинтированном графе, достаточно просто посчитать количество единичек в матрице смежности.
+<div class="pro">
+<pre>
+<code>
+    <font color ="blue">int <font color ="black">n<font color ="red">,<font color ="black">r<font color ="red">=<font color ="f754e1">0<font color ="red">;
+	...
+    <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="blue">for<font color ="red"> (<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0;<font color ="black">j<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">j<font color ="red">++){
+            <font color ="blue">if<font color ="red"> (<font color ="black">a<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]==<font color ="f754e1">1<font color ="red">){
+              <font color ="black">r<font color ="red">++;
+            }
+        }
+    }
+    <font color ="green">cout <font color ="red">&lt&lt<font color ="black">r<font color ="red">/<font color ="f754e1">2;<font color ="black">
+	</code>
+</pre>
+</div>
+<hr>
+<h4> Степени вершин </h4>
+<p>Неориентированный граф задан матрицей смежности. Найдите степени всех вершин графа.
+<p>Вводим вектор размера количества вершин и заполняем все ячейки 1. Если на i-ой строке мы встретили единичку, то ans[ i ] увеличиваем на 1.
+<p> Это алгоритм для матрицы смежности.
+<div class="pro">
+<pre>
+<code>
+    <font color ="green">vector<font color ="red"><<font color ="blue">int<font color ="red">><font color ="black">ans<font color ="red">(<font color ="black">n<font color ="red">,<font color ="f754e1">0<font color ="red">);
+    ...
+    <font color ="blue">for <font color ="red">(<font color ="blue">int<font color ="black"> i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">j<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">j<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">j<font color ="red">++){
+            <font color ="blue">if <font color ="red">(<font color ="black">g<font color ="red">[<font color ="black">i<font color ="red">][<font color ="black">j<font color ="red">]==<font color ="f754e1">1<font color ="red">){
+              <font color ="black">ans<font color ="red">[<font color ="black">i<font color ="red">]++;
+            }
+        }
+    }
+    <font color ="blue">for<font color ="red">(<font color ="blue">int<font color ="black"> i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">n<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="green">cout<font color ="red">&lt&lt<font color ="black">ans<font color ="red">[<font color ="black">i<font color ="red">]&lt&lt<font color ="green">endl<font color ="red">;
+    }<font color ="black">
+	</code>
+</pre>
+</div>
+<p> Вот алгоритм для списка ребер. Просто теперь при вводе вершин, соединяющий ребро, увеличиваем значение ячейке на соответсвующих верщинах.
+<div class="pro">
+<pre>
+<code>
+    <font color ="green">cin <font color ="red">>><font color ="black"> versh<font color ="red">>><font color ="black">rebra<font color ="red">;
+    <font color ="green">vector<font color ="red">&lt<font color ="blue">int<font color ="red">><font color ="black">ans<font color ="red">(<font color ="black">versh<font color ="red">,<font color ="f754e1">0<font color ="red">);
+    <font color ="blue">for <font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">rebra<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="green">cin <font color ="red">>><font color ="black"> le <font color ="red">>><font color ="black"> r<font color ="red">;
+       <font color ="black"> ans<font color ="red">[<font color ="black">le<font color ="red">-<font color ="f754e1">1<font color ="red">]++;
+        <font color ="black">ans<font color ="red">[<font color ="black">r<font color ="red">-<font color ="f754e1">1<font color ="red">]++;
+    }
+    <font color ="blue">for<font color ="red">(<font color ="blue">int <font color ="black">i<font color ="red">=<font color ="f754e1">0<font color ="red">;<font color ="black">i<font color ="red">&lt<font color ="black">versh<font color ="red">;<font color ="black">i<font color ="red">++){
+        <font color ="green">cout<font color ="red">&lt&lt<font color ="black">ans<font color ="red">[<font color ="black">i<font color ="red">]&lt&lt<font color ="green">endl<font color ="red">;
+    }<font color ="black">
+</code>
+</pre>
+</div>
+	</td>
+	</tr>
+<tr>
+	<td colspan =6 class="bebra">
+	</td>
+	</tr>
+</table>
+
+
+	</body>
+
+</html>

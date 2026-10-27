@@ -1,0 +1,85 @@
+
+h1{
+font-family: arial black;
+font-size: 25pt;
+text-align: center;
+color: white;
+}
+h2{
+font-family: arial black;
+font-size: 25pt;
+text-align: center;
+}
+h3{
+font-family: arial black;
+font-size: 20pt;
+text-align: center;
+}
+h4{
+font-family: arial;
+font-size: 18pt;
+text-align: center;
+}
+p{
+font-family: arial ;
+font-size: 15pt;
+text-align: justify;
+ text-indent: 30px;
+padding-left : 10px;
+padding-right : 10px;
+line-height: 30px
+
+}
+
+hr{
+width: 100%;
+color: #e0ece4;
+border-top: solid 5px;
+}
+b.gr{
+font-family: arial ;
+font-size: 20pt;
+
+}
+figcaption{
+font-family: bahnschrift ;
+font-size: 15pt;
+text-align: center;
+margin-bottom: 5px;
+	}
+figure.le{
+display: flex;
+flex-flow: column;
+float: left;
+margin: 5px;
+margin-right: 15px;
+}
+figure.r{
+display: flex;
+flex-flow: column;
+float: right;
+margin: 10px;
+margin-right: 15px;
+}
+code{
+	font-family: Consolas ;
+font-size: 13pt;
+text-align: justify;
+ text-indent: 30px;
+padding-left : 10px;
+padding-right : 10px;
+line-height: 30px
+}
+details{
+	overflow: auto;
+}
+summary{
+font-family: arial;
+font-size: 15pt;
+text-align: center;
+margin-bottom: 10px;
+
+}
+
+	
+				 
